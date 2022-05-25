@@ -12,7 +12,7 @@ app.use( multer().any())
 
 
 
-mongoose.connect("mongodb+srv://FunctionUp:surbhi231@cluster0.ufu0v.mongodb.net/group32-db", {
+mongoose.connect("mongodb+srv://rohanDb:iamjerry@cluster0.etldx.mongodb.net/rohan07-db", {
         useNewUrlParser: true
     })
 
@@ -22,7 +22,6 @@ mongoose.connect("mongodb+srv://FunctionUp:surbhi231@cluster0.ufu0v.mongodb.net/
 
 
 app.use('/', route);
-
 
 app.listen(process.env.PORT || 3000, function() {
     console.log('Express app running on port ' + (process.env.PORT || 3000))
