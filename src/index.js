@@ -12,7 +12,9 @@ app.use( multer().any())
 
 
 
+
 mongoose.connect("mongodb+srv://FunctionUp:surbhi231@cluster0.ufu0v.mongodb.net/group32Database", {
+
         useNewUrlParser: true
     })
 

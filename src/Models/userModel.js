@@ -38,7 +38,9 @@ let userSchema = new mongoose.Schema({
             required: true},
         pincode: {
             type:Number, 
-            required:true}
+            required:true,
+        minLen:6,
+    maxLen:6}
     },
       billing: {
         street: {
