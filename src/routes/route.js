@@ -11,7 +11,9 @@ router.post("/register", user. registerUser)
 router.post("/login", loginController.loginUser)
 
 // product API's
-router.post("/products",productController.products )
-
+router.post("/products",productController.createProduct )
+router.get("/products", productController.getSpecificProduct)
+router.get("/products/:productId", productController.getproductbyId)
+router.get("/products/:productId", productController.deleteProduct)
 
 module.exports = router;
