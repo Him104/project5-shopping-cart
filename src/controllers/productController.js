@@ -253,16 +253,61 @@ const updateProduct = async function(req,res){
     try {
 
         let productId = req.params.productId
+        
         let data = req.body
 
-       
-
+        let files = req.files
+        let {title,description,price,currencyId,currencyFormat,isFreeShipping,availableSizes,installments} = data
         if(Object.keys(data)==0)
             return res.status(400).send({ status: false, message: "Enter data to update" }) 
 
             let findingProduct = await productModel.findById(productId)
             if(!findingProduct)
             return res.status(400).send({status:true,message:error.message})
+
+            if(!title)
+                return res.status(400).send({status:true, message:"title is a required field"})
+            
+          let  checkingUnique = await productModel.findOne({title:data.title})
+
+          if(checkingUnique){
+          
+            return res.status(400).send({status:false,message:"title already in use"})
+          }
+          
+          if(!description)
+
+          return res.status(400).send({status:false, message:"description is a required field"})
+            
+          if(!price)
+          return res.status(400).send({status:false, message:"price is a required field"})
+
+             
+          if(!currencyId)
+          return res.status(400).send({status:false, message:"currencyId is a required field"})
+
+          if(currencyId != 'INR') 
+          return res.status(400).send({ status: false, message: `${currencyId} is Not A Valid Currency Id` })
+          
+
+             
+          if(!currencyFormat)
+          return res.status(400).send({status:false, message:"currency format is a required field"})
+
+          if(currencyFormat != '₹') 
+          return res.status(400).send({ status: false, message: `${currencyFormat} is Not A Valid Currency Id` })
+          
+        
+
+          if (files && files.length>0){
+          let uploadFile = await aws.uploadFile(files[0])
+          data.productImage = uploadFile
+          }
+          else {
+            return res.status(400).send({status: false, message: "No image found"})
+          }          
+if(!availableSizes)
+ return res.status(400).send({status:false, message:"available size field can't be empty"})          
 
             const updateProduct = await productModel.findByIdAndUpdate(productId,
            { $set:{title:data.title, description:data.description,price:data.price,currencyId:data.currencyId,currencyFormat:data.currencyFormat,productImage:data.productImage,style:data.style,availableSizes:data.availableSizes, installments:data.installments}},
