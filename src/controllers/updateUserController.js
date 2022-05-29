@@ -2,6 +2,8 @@ const userModel = require("../Models/userModel")
 const jwt = require("jsonwebtoken")
 const aws = require("../middleware/aws")
 const bcrypt = require('bcrypt')
+const mongoose = require('mongoose')
+
 
 const updateUser = async function (req,res){
     try {
@@ -9,10 +11,13 @@ const updateUser = async function (req,res){
     
         let data = req.body
     
-        // const isValidObjectId = mongoose.Types.ObjectId.isValid(ObjectId)
+        
+
         let {fname, lname, email, password, phone, address} = data
       
-       
+       if(!isValidObjectId(userId))
+return res.status(400).send({status:false, message:"objectid is not valid"})
+
         if(Object.keys(data)==0)
             return res.status(400).send({ status: false, message: "Enter data to update" }) 
         

@@ -9,8 +9,6 @@ let isValid = function (value){
 }
 //POST /register
 
-
-
 const registerUser = async function(req, res){
     try {
         let data = req.body
