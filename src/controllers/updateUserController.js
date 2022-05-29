@@ -10,13 +10,13 @@ const updateUser = async function (req,res){
         let userId = req.params.userId
     
         let data = req.body
-    
-        
+
+        let files = req.files
 
         let {fname, lname, email, password, phone, address} = data
       
-       if(!isValidObjectId(userId))
-return res.status(400).send({status:false, message:"objectid is not valid"})
+//        if(!isValidObjectId(userId))
+// return res.status(400).send({status:false, message:"objectid is not valid"})
 
         if(Object.keys(data)==0)
             return res.status(400).send({ status: false, message: "Enter data to update" }) 
@@ -25,7 +25,7 @@ return res.status(400).send({status:false, message:"objectid is not valid"})
         if(!findingUser)
         
             return res.status(400).send({status:false, message: "couldn't find userId"})
-    if(fname)
+            if(fname)
                 if (!fname)
                     return res.status(400).send({ status: false, message: "Please provide first name" })
     if(lname)
@@ -34,6 +34,14 @@ return res.status(400).send({status:false, message:"objectid is not valid"})
     if(email)
                     if (!email)
                     return res.status(400).send({ status: false, message: "Please provide email" })
+
+                    if (files && files.length>0){
+                        let uploadFile = await aws.uploadFile(files[0])
+                        data.profile = uploadFile
+                        }
+                        else {
+                          return res.status(400).send({status: false, message: "No image found"})
+                        }       
     if(password)
                     if (!password)
                     return res.status(400).send({ status: false, message: "Please provide password" })
