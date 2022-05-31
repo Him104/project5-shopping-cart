@@ -68,7 +68,7 @@ const createProduct = async function (req, res) {
         let data = req.body
         let files = req.files
 
-        let {title,description,price,currencyId,currencyFormat,isFreeShipping,availableSizes,installments} = data
+        let {title,description,price,currencyId,currencyFormat,isFreeShipping,availableSizes,style,installments,isDeleted} = data
              
             // body validation
             if(!isValidRequestBody(data)) {
@@ -138,7 +138,7 @@ const createProduct = async function (req, res) {
         //  uploadFiles
         if (files && files.length > 0) {
             let uploadedFileURL = await aws.uploadFile(files[0])
-            data.productImage = uploadedFileURL
+         data.productImage = uploadedFileURL
         } else {
             return res.status(400).send({ msg: "No image found to upload" })
         }
@@ -200,8 +200,7 @@ const getSpecificProduct = async function (req, res) {
             data["price"] = {$lte:priceLessThan,$gte:priceGreaterThan}
     
         }
-        let filerProduct = await productModel.find(data).sort({price: req.query.priceSort})//.skip(8)//.limit(1)//.count();
-        // let filerProduct = await productModel.find({title: {$regex: name}});
+        let filerProduct = await productModel.find(data).sort({price: req.query.priceSort})
         if (filerProduct.length === 0) {
             return res.status(400).send({
                 status: true,
