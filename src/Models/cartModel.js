@@ -5,14 +5,14 @@ const cartSchema = new mongoose.Schema({
     userId: {
         required: true,
         type: ObjectId,
-        ref: 'user'
+        ref: 'Users'
     },
     items:[{
         productId: {
             type:Number,
             required:true,
             type:ObjectId,
-            ref:'product model'
+            ref:'Product'
         },
         quantity: {
             type:Number,
@@ -23,7 +23,7 @@ const cartSchema = new mongoose.Schema({
         required:true,
         //comment:
     },
-    totalPrice: {
+    totalItems: {
         type:Number,
         required:true,
         //comment:
