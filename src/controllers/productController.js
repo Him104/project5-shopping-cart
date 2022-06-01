@@ -323,6 +323,10 @@ if(!availableSizes)
 }
 
 
+
+
+
+
 const deleteProduct = async  function(req, res)  {
     try {
         const data = req.params.productId

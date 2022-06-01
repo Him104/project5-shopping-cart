@@ -4,8 +4,9 @@
   
   const authentication = async function(req, res, next){
       try{
-          const token = req.headers["authorization"];
-           
+
+    let token = req.headers["authorization"];
+        //    console.log(token);
           if(!token){
               return res.status(400).send({status:false, msg: "login is required, token is required"})
           }
@@ -14,6 +15,7 @@
           console.log(bearer)
 
           const decodedtoken =jwt.verify(bearer, "uranium")
+        //   req.userIdToken =   decodedtoken._id
           console.log(decodedtoken)
           if(!decodedtoken){
               return res.status(400).send({status:false, msg: "token is invalid"})

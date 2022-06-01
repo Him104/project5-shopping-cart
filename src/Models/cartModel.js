@@ -5,14 +5,14 @@ const cartSchema = new mongoose.Schema({
     userId: {
         required: true,
         type: ObjectId,
-        ref: 'user'
+        ref: 'users'
     },
     items:[{
         productId: {
             type:Number,
             required:true,
             type:ObjectId,
-            ref:'product model'
+            ref:'products'
         },
         quantity: {
             type:Number,
@@ -23,7 +23,7 @@ const cartSchema = new mongoose.Schema({
         required:true,
         //comment:
     },
-    totalPrice: {
+    totalItems: {
         type:Number,
         required:true,
         //comment:
@@ -32,4 +32,4 @@ const cartSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 
-module.exports = mongoose.model('cart', cartSchema)
+module.exports = mongoose.model('carts', cartSchema)
