@@ -90,12 +90,13 @@ const { isValidObjectId,isValidReqBody, quantityRange} = require("../Middleware/
     const updateCart = async function (req, res) {
         try {
             const userId = req.params.userId
-            const { cartId, productId, removeProduct } = req.body
+            let data = req.body
+            const { cartId, productId, removeProduct } = data
             // console.log(removeProduct )
     
-            const key = Object.keys(req.body)
+            
     
-            if (key == 0) {
+            if (Object.keys(data).length==0) {
                 return res.status(400).send({ status: false, msg: "please enter some data" })
             }
     
@@ -103,7 +104,7 @@ const { isValidObjectId,isValidReqBody, quantityRange} = require("../Middleware/
                 return res.status(400).send({ status: false, msg: "userId is invalid" })
             }
     
-            if (!isValid(cartId)) {
+            if (!cartId) {
                 return res.status(400).send({ status: false, msg: "cartId is required" })
             }
     
@@ -111,7 +112,7 @@ const { isValidObjectId,isValidReqBody, quantityRange} = require("../Middleware/
                 return res.status(400).send({ status: false, msg: "cartId is invalid" })
             }
     
-            if (!isValid(productId)) {
+            if (!productId) {
                 return res.status(400).send({ status: false, msg: "productId is required" })
             }
     
@@ -119,7 +120,7 @@ const { isValidObjectId,isValidReqBody, quantityRange} = require("../Middleware/
                 return res.status(400).send({ status: false, msg: "productId is invalid" })
             }
     
-            if (!isValid(removeProduct)) {
+            if (!removeProduct) {
                 return res.status(400).send({ status: false, msg: "removeProduct is required" })
             }
     
@@ -204,7 +205,7 @@ const { isValidObjectId,isValidReqBody, quantityRange} = require("../Middleware/
               return res.status(400).send({ status: false, msg: "userId is invalid" });
           }
       
-          const userByuserId = await usermodel.findById(userIdFromParams);
+          const userByuserId = await userModel.findById(userIdFromParams);
       
           if (!userByuserId) {
               return res.status(404).send({ status: false, message: 'user not found.' });
@@ -214,7 +215,7 @@ const { isValidObjectId,isValidReqBody, quantityRange} = require("../Middleware/
               return res.status(403).send({status: false,message: "Unauthorized access." });
           }
       
-          const findCart = await cartmodel.findOne({ userId: userIdFromParams })
+          const findCart = await cartModel.findOne({ userId: userIdFromParams })
           
           if (!findCart) {
               return res.status(400).send({ status: false, message: "no cart exist with this id" })
