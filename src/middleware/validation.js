@@ -2,14 +2,16 @@ const { default: mongoose } = require("mongoose");
 
 //const ObjectId = require("mongoose").Types.ObjectId
 
+
 //******************//
 
-//==Req.Body Validation
-
-let isValidReqBody = function (data) {
-    if(Object.keys(data).length) return false;
+//==Request Body Validation
+let isValidRequestBody = function (body) {
+    if (Object.keys(body).length === 0) return false;
     return true;
 }
+
+
 //********************//
 
 // //==quantityRange Validation
@@ -20,11 +22,10 @@ let quantityRange = function (data) {
 }
 //********************//
 
-
 //==Mandatory Field Validation
-let isValid = function(value){
-    if(typeof value === 'undefined' || typeof value === null) return false;
-    if(typeof value === 'string' && value.toString().trim().length === 0) return false
+let isValid = function (value) {
+    if (typeof value === 'undefined' || value === null) return false;
+    if (typeof value === 'string' && value.trim().length === 0) return false;
     return true;
 }
 
@@ -93,6 +94,15 @@ let isValidEnum = function(value){
     return availableSizes.includes(value)
 }
 
+//*******************************************************************//
+
+//==File Validation
+const isValidFile = function(files){
+    let imageRegex = /.*\.(jpeg|jpg|png)$/;
+    return imageRegex.test(files)
+}
+
+
 //****************//
 
 //==Enum Validation
@@ -104,4 +114,4 @@ const isValidNum = (number)=>{
     }
 };
 
-module.exports={ isValidReqBody,quantityRange,isValidNum, isValid,isValidPincode, isValidObjectId, isValidEmail, isValidMobile, isValidName,isValidPassowrd,isValidPrice,isValidEnum}
+module.exports={ isValidRequestBody,quantityRange,isValidNum, isValid,isValidPincode, isValidObjectId, isValidEmail, isValidMobile, isValidName,isValidPassowrd,isValidPrice,isValidFile,isValidEnum}
