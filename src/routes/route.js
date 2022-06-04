@@ -12,7 +12,7 @@ const orderController = require('../controllers/orderController')
 
 router.post("/register", register.registerUser)
 router.post("/login",login.loginUser)
-router.get("/user/:userId/profile", middleware.authentication, fetchUserdetails.getUser)
+router.get("/user/:userId/profile", fetchUserdetails.getUser)
 router.put("/user/:userId/profile", update.updateUser)
 router.post("/products",productController.createProduct)
 router.get("/products", productController.getSpecificProduct)

@@ -1,11 +1,9 @@
-
-  const jwt= require("jsonwebtoken")
-  
+const jwt= require("jsonwebtoken")
   
   const authentication = async function(req, res, next){
       try{
 
-    let token = req.headers["authorization"];
+    let token = req.headers["Authorization"];
         //    console.log(token);
           if(!token){
               return res.status(400).send({status:false, msg: "login is required, token is required"})
@@ -20,7 +18,12 @@
           if(!decodedtoken){
               return res.status(400).send({status:false, msg: "token is invalid"})
           }
-  
+if(decodedtoken.userId !== req.params.userId){
+  return res.status(403).send({status:false, message: 'Unauthorized access'})
+}
+
+  req.userId = decodedtoken.userId
+
           next();
       }
       catch(error){

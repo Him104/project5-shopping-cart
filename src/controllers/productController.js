@@ -110,7 +110,7 @@ const createProduct = async function (req, res) {
           return res.status(400).send({ status: false, message: "currency Format is required" }) 
 
         if(currencyFormat != '₹') {
-            return res.status(400).send({ status: false, message: `${currencyFormat} Is Not A Valid Curency Format` })}
+            return res.status(400).send({ status: false, message: `${currencyFormat} Is Not A Valid Currency Format` })}
 
         // freeShipping validation
         if (!isValidBoolean(isFreeShipping)) 
@@ -263,7 +263,7 @@ const updateProduct = async function(req,res){
 
             let findingProduct = await productModel.findById(productId)
             if(!findingProduct)
-            return res.status(400).send({status:true,message:error.message})
+            return res.status(400).send({status:true,message: "we  couldn't find the product with this productId"})
 
             if(!title)
                 return res.status(400).send({status:true, message:"title is a required field"})

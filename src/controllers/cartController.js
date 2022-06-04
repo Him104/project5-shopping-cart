@@ -13,9 +13,9 @@ const { isValidObjectId,isValidReqBody, quantityRange} = require("../Middleware/
             const data = req.body
             console.log(data)
            
-            if(isValidReqBody(data)){
-                return res.status(400).send({status:false, message:"Please provide Data"})
-            }
+            // if(isValidReqBody(data)){
+            //     return res.status(400).send({status:false, message:"Please provide Data"})
+            // }
             //===check userId
             if(!isValidObjectId(userId)){
                 return res.status(400).send({status:false, message:"Plz provied userId"})

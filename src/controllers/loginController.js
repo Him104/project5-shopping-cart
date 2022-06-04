@@ -7,8 +7,11 @@ const bcrypt = require('bcrypt')
 const loginUser = async function (req,res){
  try {
     const data = req.body
-    if (Object.keys(data) == 0)
+    if (!Object.keys(data).length > 0)
              return res.status(400).send({ status: false, message: "Bad Request, No data provided" })
+
+             let userName = data.email;
+             let password = data.password;
 
              if(!data.email)
              {
@@ -20,14 +23,11 @@ const loginUser = async function (req,res){
                 res.status(400).send({status:false, message:"password is required to login"})
              }
 
-             let userName = data.email;
-             let password = data.password;
-
              let findUser = await userModel.findOne({email:userName})
 
              if(!findUser)
              {
-                return res.status(400).send({status:false,message:"username is invalid"})
+                return res.status(400).send({status:false,message: "username is invalid"})
              }
              bcrypt.compare(password,findUser.password, function(err, result){
                 if(result){

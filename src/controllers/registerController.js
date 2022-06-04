@@ -1,6 +1,8 @@
 const userModel = require("../Models/userModel")
 const aws = require("../middleware/aws")
 const bcrypt = require('bcrypt')
+const mongoose = require('mongoose')
+const cartModel = require('../Models/cartModel')
 
 let isValid = function (value){
     if(typeof value === "undefined" || value === null) return false
@@ -12,14 +14,12 @@ let isValid = function (value){
 const registerUser = async function(req, res){
     try {
         let data = req.body
+
+        if(!Object.keys(data).length>0)
+        return res.status(400).send({status:false,message:"some input is required"})
         // console.log(data)
         let files = req.files
-        if(!data){
-            return res.status(400).send({status:false, message:"Data is Missing"})
-        }
-        if (Object.keys(data).length===0) {
-            return res.status(400).send({status:false,message:'no data provided'})
-        }
+        
         // console.log(data)
         let {fname , lname , email , phone , password,address }= data
         if(!fname) {
@@ -71,10 +71,7 @@ const registerUser = async function(req, res){
       if(!email){
           return res.status(400).send({status:false, message:"email is required"})
       }
-      if(!password)
-      {
-        return res.status(400).send({status:false, message: "phone is a required field"})
-      }
+      
       //generate salt to hash password
         //const salt = await bcrypt.genSalt(10)
         let salt =await bcrypt.genSalt(10)
